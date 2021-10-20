@@ -1,34 +1,61 @@
 #!/bin/sh
 while true; do
   a=`dialog --title "MENU" \
-    --stdout --menu "MENU HEADING" 0 0 0 1 "FIRST" 2 "SECOND" 3 "THIRD" 4 "FOURTH" 5 "FIFTH" 0 "END"`
+    --stdout --nocancel --menu "Выберите действие" 0 0 0 \
+    1 "Удалить файл с созданием жесткой ссылки" \
+    2 "Восстановить файл" \
+    3 "Сделать резервную копию для $HOME/listtask/" \
+    4 "Восстановить последнюю резервную копию в $HOME/listtask" \
+    5 "Восстановить резервную копию в $HOME/listtask за определенную дату" \
+    0 "Выход"`
 
 
     case $a in
             "1")
-                dialog --title "Title" --backtitle "Background Title" \
-                --msgbox "First entry selected" 0 0
+                user_input=$(\
+                dialog --title "Удаление файла" \
+                        --inputbox "Укажите имя файла:" 8 40 \
+                3>&1 1>&2 2>&3 3>&- \
+                )
+                if [ "$user_input" != "" ]; then
+                    ./scripts/remftrash.sh "scripts/$user_input" 
+                   
+                fi
                 ;;
             "2")
-                dialog --title "Title" --backtitle "Background Title" \
-                --msgbox "Second entry selected" 0 0
+                user_input=$(\
+                dialog --title "Восстановление файла" \
+                        --inputbox "Укажите полное или неполное имя файла:" 8 40 \
+                3>&1 1>&2 2>&3 3>&- \
+                )
+                if [ "$user_input" != "" ]; then
+                    ./scripts/unftrash.sh "$user_input"           
+                fi
                 ;;
             "3")
-                dialog --title "Title" --backtitle "Background Title" \
-                --msgbox "Third entry selected" 0 0
+                ./scripts/makebackup.sh &&
+                dialog --title "Info" --backtitle "" \
+                --msgbox "Резервная копия создана" 0 0
                 ;;
             "4")
-                dialog --title "Title" --backtitle "Background Title" \
-                --msgbox "Fourth entry selected" 0 0
+                ./scripts/restorebackup.sh &&
+                dialog --title "Info" --backtitle "" \
+                --msgbox "Резервная копия восстановлена" 0 0
                 ;;
             "5")
-                dialog --title "Title" --backtitle "Background Title" \
-                --msgbox "Fifth entry selected" 0 0
+                user_input=$(\
+                dialog --title "Откат " \
+                        --inputbox "Укажите дату в формате YYMMDD:" 8 40 \
+                3>&1 1>&2 2>&3 3>&- \
+                )
+                if [ "$user_input" != "" ]; then
+                    ./scripts/rollbackstate.sh "$user_input" 
+                fi
                 ;;
             "0")
-                dialog --title "Title" --backtitle "Background Title" \
-                --no-label "End of program" --yes-label "Continue" \
-                --yesno "End of program?" 0 0
+                dialog --title "Подтверждение действия" --backtitle "Background Title" \
+                --no-label "Выйти" --yes-label "Отмена" \
+                --yesno "Выйти?" 0 0
                 if [ $? -eq 1 ]; then
                     exit
                 fi

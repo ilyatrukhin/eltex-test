@@ -1,12 +1,12 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-    echo "Usage remftrash <fileaname>"
+    dialog --title "Ошибка" --msgbox "Неверное число параметров. Укажите имя файла для удаления" 0 0
     exit 1 
 fi
  
 if [[ ! -f "$1" ]]; then
-    echo "File doesn't exist"
+    dialog --title "Ошибка" --msgbox "Указанный файл $1 не найден" 0 0
     exit 1
 fi
 
