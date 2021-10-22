@@ -1,3 +1,5 @@
+// variant 9
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,9 +24,9 @@ int main(int argc, char *argv[]){
     char *res = (char*)malloc(strlen(argv[1])*sizeof(char));
     strcpy(buf, argv[1]);
     invWordsInText(buf);
-    printf("%s %ld\n", buf, strlen(buf));
+    printf("%s\n", buf);
     delPalind(buf, res, strlen(buf));
-    printf("%s\n", res);
+    printf("Result:\n%s\n", res);
     
     free(buf);
     free(res);
