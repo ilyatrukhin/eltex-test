@@ -2,9 +2,15 @@ CC=gcc
 CFLAGS=-Wall -Werror -c
 STD=c99
 
-all: task1.o task2.o task3.o
+all: task1 task2 task3
+
+task1: task1.o
 	$(CC) task1.o -o  task1
+
+task2: task2.o
 	$(CC) task2.o -o  task2
+
+task3: task3.o
 	$(CC) task3.o -o  task3
 
 task1.o:
