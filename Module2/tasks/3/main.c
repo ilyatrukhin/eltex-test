@@ -3,18 +3,10 @@
 
 void vector_init(vector *v)
 {
-    //init function pointers
-    v->size = vectorSize;
-    v->resize = vectorResize;
-    v->add = vectorPushBack;
-    v->set = vectorSet;
-    v->get = vectorGet;
-    v->free = vectorFree;
-    v->del = vectorDelete;
     //initialize the capacity and allocate the memory
-    v->vectorList.capacity = VECTOR_INIT_CAPACITY;
-    v->vectorList.size = 0;
-    v->vectorList.items = malloc(sizeof(void *) * v->vectorList.capacity);
+    v->capacity = VECTOR_INIT_CAPACITY;
+    v->size = 0;
+    v->items = malloc(sizeof(void *) * v->capacity);
 }
 
 typedef struct student{
@@ -37,12 +29,12 @@ int main(int argc, char *argv[])
     vector_init(&students);
 
     //Add data in vector
-    students.add(&students, (student*)st1);
-    students.add(&students, (student*)st2);
+    vectorPushBack(&students, (student*)st1);
+    vectorPushBack(&students, (student*)st2);
   
-    for (i = 0; i < students.size(&students); i++)
+    for (i = 0; i < vectorSize(&students); i++)
     {
-        printf("%d\n", ((student*)students.get(&students, i))->age);
+        printf("%d\n", ((student*)vectorGet(&students, i))->age);
     }
     //Set the data at index 0
     //v.set(&v,0,"9.0001");
