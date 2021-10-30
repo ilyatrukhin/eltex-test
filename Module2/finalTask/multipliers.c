@@ -9,8 +9,10 @@ void getMults(multipliers *m, long number){
 	int mult = 2;
 	
 	while(tmp > 1){
-		while(!(tmp % mult)){
-			tmp /= mult;
+		if(!(tmp % mult)){
+			while(!(tmp % mult)){
+				tmp /= mult;
+			}
 			if(++m->count > size){
 				size *= 2;
 				m->mults = realloc(m->mults, size);
