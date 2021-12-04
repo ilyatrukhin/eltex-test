@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 	if (!ext_library){
 		//если ошибка, то вывести ее на экран
 		fprintf(stderr,"dlopen() error: %s\n", dlerror());
-		return 1;
+		return EXIT_FAILURE;
 	};
 
 	//загружаем из библиотеки требуемую процедуру
