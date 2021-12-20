@@ -26,6 +26,7 @@ void battle(struct player *p1, struct player *p2){
 void take_cell(struct table *tbl, struct player *p){
     tbl->cells[p->position.x * tbl->size + p->position.y]->player_ptr = p;
     p->count_lifes += tbl->cells[p->position.x * tbl->size + p->position.y]->weight;
+    tbl->cells[p->position.x * tbl->size + p->position.y]->weight = 0;
 }
 
 void free_cell(struct table *tbl, struct player *p){
